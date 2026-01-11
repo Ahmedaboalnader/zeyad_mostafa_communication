@@ -1,0 +1,3174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>بنك أسئلة التواصل – Dr Adel Elhawary</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: #f3f5f9;
+      color: #222;
+      direction: rtl;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 14px;
+      margin: 2px 0;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .stat-box {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .stat-label {
+      font-size: 13px;
+      color: #555;
+    }
+    .stat-value {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 4px;
+      color: #007b83;
+    }
+    .controls {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+    }
+    .search-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .search-row input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .filters-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-left: 16px;
+    }
+    .filters-label {
+      font-size: 13px;
+      font-weight: bold;
+      align-self: center;
+    }
+    .btn {
+      border: none;
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      background: #e2e6f0;
+      color: #222;
+      transition: all 0.15s ease;
+    }
+    .btn:hover {
+      background: #cbd3e6;
+    }
+    .btn.active {
+      background: #007b83;
+      color: #fff;
+    }
+    .questions {
+      margin-top: 12px;
+    }
+    .question-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+      border-right: 4px solid #007b83;
+    }
+    .q-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .q-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #007b83;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .q-meta {
+      font-size: 11px;
+      color: #666;
+    }
+    .q-text-en {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .q-text-ar {
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 6px;
+    }
+    .option-btn {
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      padding: 6px 8px;
+      background: #f9fafb;
+      text-align: right;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .option-btn.correct {
+      background: #d1f3d2;
+      border-color: #2e8b57;
+      color: #14532d;
+    }
+    .option-btn.incorrect {
+      background: #ffd6d6;
+      border-color: #d11a2a;
+      color: #7f1d1d;
+    }
+    .q-footer {
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px dashed #ddd;
+      font-size: 12px;
+      color: #333;
+    }
+    .q-footer strong {
+      color: #007b83;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (max-width: 700px) {
+      .stats {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+      }
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>زعزع && Made by Zeyad_Mostafa </h1>
+    <p>Interactive Communication Question Bank – English questions with Arabic explanations.</p>
+    <p>بنك أسئلة تفاعلي لممارسة مفاهيم الاتصال والتثقيف الصحي.</p>
+  </header>
+
+  <section class="stats">
+    <div class="stat-box">
+      <div class="stat-label">إجمالي الأسئلة</div>
+      <div class="stat-value" id="stat-total">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">تمت الإجابة</div>
+      <div class="stat-value" id="stat-answered">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">الإجابات الصحيحة</div>
+      <div class="stat-value" id="stat-correct">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">نسبة النجاح %</div>
+      <div class="stat-value" id="stat-percent">0%</div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="بحث في السؤال (إنجليزي/عربي) أو في Group أو Category ..." />
+    </div>
+    <div class="filters">
+      <span class="filters-label">المجموعات:</span>
+      <div class="filters-group" id="partFilters">
+        <button class="btn active" data-part="ALL">الكل</button>
+        <button class="btn" data-part="Group A">Group A</button>
+        <button class="btn" data-part="Group B">Group B</button>
+        <button class="btn" data-part="Group C">Group C</button>
+        <button class="btn" data-part="Group D">Group D</button>
+      </div>
+      <span class="filters-label">الفئات:</span>
+      <div class="filters-group" id="categoryFilters">
+        <button class="btn active" data-category="ALL">الكل</button>
+        <button class="btn" data-category="Communication">Communication</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="questions" id="questionsContainer"></section>
+</div>
+
+<script>
+  // ===================== DATA =====================
+  const allQuestions = [
+    {
+      id: 1,
+      part: "Group A",
+      category: "Communication",
+      en: "As regards communication, barriers of messages include which of the following?",
+      ar: "بالنسبة للتواصل، أي من التالي يُعَدّ من عوائق الرسائل؟",
+      options: [
+        "Easy messages",
+        "Relevant messages",
+        "Unclear messages",
+        "Complete messages"
+      ],
+      correct: 2,
+      explanation: "الرسائل غير الواضحة تُعدّ عائقًا لأنها تجعل الفهم صعبًا وتزيد احتمال سوء التفسير."
+    },
+    {
+      id: 2,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is the definition of motivation?",
+      ar: "ما هو التعريف الصحيح للدافعية (Motivation)؟",
+      options: [
+        "It is internal force that initiates and directs the individual to act in a certain manner to satisfy needs",
+        "It is external force",
+        "Both 1 and 4",
+        "Motivation starts with need, vision, dream"
+      ],
+      correct: 2,
+      explanation: "الدافعية عملية داخلية ترتبط بالاحتياج والرؤية والحلم، لذلك الإجابة تجمع بين التعريف والعناصر المحفزة."
+    },
+    {
+      id: 3,
+      part: "Group A",
+      category: "Communication",
+      en: "As regards the role of the teacher, which of the following is not correct?",
+      ar: "بالنسبة لدور المعلم، أي مما يلي غير صحيح؟",
+      options: [
+        "Planner",
+        "Clarifier",
+        "Stimulator",
+        "Volunteer"
+      ],
+      correct: 3,
+      explanation: "المعلم يؤدي أدوارًا مهنية مخططة، وليس مجرد متطوع؛ لذلك كون المعلم متطوّعًا ليس وصفًا دقيقًا للدور."
+    },
+    {
+      id: 4,
+      part: "Group A",
+      category: "Communication",
+      en: "Group approach method of education includes which of the following?",
+      ar: "أي من الآتي يُعتبر من طرق التعليم الجماعي؟",
+      options: [
+        "Television",
+        "Home visit",
+        "Lecture",
+        "Internet"
+      ],
+      correct: 2,
+      explanation: "المحاضرة نشاط تعليمي جماعي مباشر، بينما البقية يمكن أن تستخدم في سياقات أخرى أو فردية."
+    },
+    {
+      id: 5,
+      part: "Group A",
+      category: "Communication",
+      en: "As regards importance of motivation which of the following is not correct?",
+      ar: "فيما يخص أهمية الدافعية، أي من التالي غير صحيح؟",
+      options: [
+        "Activate behavior",
+        "Give direction",
+        "Increase productivity",
+        "Passive participation"
+      ],
+      correct: 3,
+      explanation: "الدافعية ترتبط بالمشاركة النشطة، لذا “مشاركة سلبية” لا تعبر عن أهميتها بل تعكس غياب الدافعية."
+    },
+    {
+      id: 6,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for essentials of communication?",
+      ar: "أي من التالي صحيح كأساس من أساسيات الاتصال؟",
+      options: [
+        "Do not react instantly and mutter in angers",
+        "Go to the conclusion",
+        "Interrupt the speaker",
+        "Use medical terminology difficult to be understood"
+      ],
+      correct: 0,
+      explanation: "من أساسيات الاتصال التحكم في الانفعال وعدم الرد الفوري بغضب لضمان رسالة واضحة وهادئة."
+    },
+        {
+      id: 7,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is considered correct for verbal communication?",
+      ar: "أي مما يلي يُعتبر صحيحًا عن الاتصال اللفظي؟",
+      options: [
+        "Need words to express emotions",
+        "Active listening",
+        "Direct questioning",
+        "All of the above"
+      ],
+      correct: 3,
+      explanation: "الاتصال اللفظي يشمل استخدام الكلمات للتعبير عن المشاعر والاستماع النشط وطرح أسئلة مباشرة."
+    },
+    {
+      id: 8,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is the characteristic of nonverbal communication?",
+      ar: "أي مما يلي من خصائص الاتصال غير اللفظي؟",
+      options: [
+        "Easy communication",
+        "More reliable than verbal communication",
+        "Do not need observation",
+        "Cannot be use with deaf and mute persons"
+      ],
+      correct: 1,
+      explanation: "غالبًا ما تكون الإشارات غير اللفظية أكثر صدقًا من الكلام، لذلك تُعتبر أكثر موثوقية."
+    },
+    {
+      id: 9,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for an effective verbal communicator?",
+      ar: "أي مما يلي صحيح للمتواصل اللفظي الفعّال؟",
+      options: [
+        "Encourages empathically",
+        "Depend on eye contact",
+        "Depend on facial expression",
+        "Depend on body language"
+      ],
+      correct: 0,
+      explanation: "المتواصل الجيد يشجع الآخر بتعاطف، ما يعزز الثقة ويُسهّل مشاركة المعلومات."
+    },
+    {
+      id: 10,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are levels of communication?",
+      ar: "ما مستويات الاتصال الصحيحة من التالي؟",
+      options: [
+        "Downwards communication",
+        "Upwards communication",
+        "Horizontal communication",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "المستويات تشمل الاتصال من أعلى لأسفل، ومن أسفل لأعلى، والأفقي بين الزملاء."
+    },
+    {
+      id: 11,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are correct for nonverbal communication?",
+      ar: "أي من التالي صحيح عن الاتصال غير اللفظي؟",
+      options: [
+        "Use body language",
+        "Facial expression, eye contact and touch appearance",
+        "Cannot use words",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الاتصال غير اللفظي يظهر في لغة الجسد وتعبيرات الوجه ونظرات العين واللمس."
+    },
+    {
+      id: 12,
+      part: "Group A",
+      category: "Communication",
+      en: "Risk factors that cause health education problem include:",
+      ar: "أي من العوامل التالية يسبب مشكلات في التثقيف الصحي؟",
+      options: [
+        "Good staff training",
+        "Spend time to interact properly with clients",
+        "Good interest in the subject",
+        "Lake staff training"
+      ],
+      correct: 3,
+      explanation: "نقص تدريب الفريق يؤدي لسوء توصيل الرسائل التعليمية الصحية وضعف الفعالية."
+    },
+    {
+      id: 13,
+      part: "Group A",
+      category: "Communication",
+      en: "Group approach of health education include which of the following?",
+      ar: "أي من التالي يُعد من أساليب التثقيف الصحي الجماعي؟",
+      options: [
+        "Internet",
+        "Lectures, workshop and conference",
+        "Home visit",
+        "Television"
+      ],
+      correct: 1,
+      explanation: "المحاضرات وورش العمل والمؤتمرات أمثلة واضحة على التثقيف الصحي لمجموعة."
+    },
+    {
+      id: 14,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are the advantages of group teaching?",
+      ar: "أي من التالي من مزايا التدريس الجماعي؟",
+      options: [
+        "Include small group only",
+        "Economic and give positive attituded development",
+        "High cost",
+        "Lack of shearing between learners"
+      ],
+      correct: 1,
+      explanation: "التعليم الجماعي غالبًا أقل تكلفة ويساعد على تكوين اتجاهات إيجابية لدى المتعلمين."
+    },
+    {
+      id: 15,
+      part: "Group A",
+      category: "Communication",
+      en: "As regards, importance of motivation which of the following is not correct?",
+      ar: "بالنسبة لأهمية الدافعية، أي من التالي غير صحيح؟",
+      options: [
+        "Intrinsic force",
+        "Give direction",
+        "Increase productivity",
+        "Extrinsic force"
+      ],
+      correct: 3,
+      explanation: "الدافعية تُعتبر قوة داخلية؛ وصفها كقوة خارجية يجعل العبارة غير صحيحة."
+    },
+    {
+      id: 16,
+      part: "Group A",
+      category: "Communication",
+      en: "….. defined as two way process involving passing messages to and from between sender and receiver?",
+      ar: "ما المصطلح الذي يعرّف عملية ثنائية الاتجاه لنقل الرسائل بين المرسل والمستقبل؟",
+      options: [
+        "Motivation",
+        "Communication",
+        "Health education code of ethics",
+        "Learning"
+      ],
+      correct: 1,
+      explanation: "الاتصال هو عملية تبادل رسائل بين المرسل والمستقبل في اتجاهين."
+    },
+    {
+      id: 17,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is considered correct for nonverbal communication?",
+      ar: "أي من التالي يُعتبر صحيحًا عن الاتصال غير اللفظي؟",
+      options: [
+        "Need words to express emotions",
+        "Need observation and understanding",
+        "Direct questioning",
+        "Need voice"
+      ],
+      correct: 1,
+      explanation: "فهم لغة الجسد وتعبيرات الوجه يحتاج ملاحظة جيدة وتفسير للسلوك."
+    },
+    {
+      id: 18,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is the characteristic of nonverbal communication?",
+      ar: "أي من التالي من خصائص الاتصال غير اللفظي؟",
+      options: [
+        "Easy communication",
+        "Non reliable than verbal communication",
+        "Do not need observation",
+        "Use body language"
+      ],
+      correct: 3,
+      explanation: "السمة الأساسية للاتصال غير اللفظي هي استخدام لغة الجسد والإيماءات."
+    },
+    {
+      id: 19,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for an effective verbal communicator?",
+      ar: "أي من التالي صحيح لمتواصل لفظي فعّال؟",
+      options: [
+        "Direct clear questioning",
+        "Depend on eye contact",
+        "Depend on facial expression",
+        "Depend on body language"
+      ],
+      correct: 0,
+      explanation: "الأسئلة الواضحة المباشرة تساعد على الحصول على معلومات دقيقة وتقليل سوء الفهم."
+    },
+    {
+      id: 20,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is a type of communication?",
+      ar: "أي من التالي نوع من أنواع الاتصال؟",
+      options: [
+        "Downwards communication",
+        "Upwards communication",
+        "Horizontal communication",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الاتصال قد يكون لأسفل، لأعلى، أو أفقيًا بين أفراد في نفس المستوى."
+    },
+    {
+      id: 21,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is not correct about the characteristic of good communicator channel?",
+      ar: "أي من التالي غير صحيح عن خصائص قناة الاتصال الجيدة؟",
+      options: [
+        "Appropriate",
+        "Affordable",
+        "Appealing",
+        "Non appropriate channel"
+      ],
+      correct: 3,
+      explanation: "القناة الجيدة يجب أن تكون مناسبة وجذابة وممكنة التكلفة؛ القناة غير المناسبة عكس ذلك."
+    },
+    {
+      id: 22,
+      part: "Group A",
+      category: "Communication",
+      en: "An effective verbal communicator include which of the following?",
+      ar: "أي من التالي من صفات المتصل اللفظي الفعّال؟",
+      options: [
+        "Clarifies, listen, acknowledges, and repeats",
+        "Relax",
+        "Open up",
+        "Eye contact"
+      ],
+      correct: 0,
+      explanation: "التوضيح والاستماع والاعتراف بما يقوله الآخر وإعادة صياغته تدعم اتصالًا فعالًا."
+    },
+    {
+      id: 23,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are the types of communication?",
+      ar: "أي من التالي يمثل أنواع الاتصال؟",
+      options: [
+        "Verbal only",
+        "Nonverbal only",
+        "Intermediate",
+        "Verbal and nonverbal"
+      ],
+      correct: 3,
+      explanation: "الاتصال الإنساني يعتمد على المزج بين اللفظي وغير اللفظي في نفس الموقف."
+    },
+    {
+      id: 24,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are correct for verbal communication?",
+      ar: "أي من التالي صحيح عن الاتصال اللفظي؟",
+      options: [
+        "Use body language",
+        "Use words in communication",
+        "Facial expression, eye contact and touch appearance",
+        "Cannot use words"
+      ],
+      correct: 1,
+      explanation: "العنصر المميز في الاتصال اللفظي هو استخدام الكلمات المنطوقة أو المكتوبة."
+    },
+    {
+      id: 25,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is not the level of communication?",
+      ar: "أي من التالي ليس مستوى من مستويات الاتصال؟",
+      options: [
+        "Downward communication",
+        "Upwards communication",
+        "Lateral communication",
+        "Vertical communication"
+      ],
+      correct: 3,
+      explanation: "التقسيم هنا يستخدم المصطلحات Downward / Upwards / Lateral كمستويات؛ Vertical تجميع عام لها."
+    },
+    {
+      id: 26,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are characters of a good sender message in communication?",
+      ar: "أي من الصفات التالية تميز المرسل الجيد؟",
+      options: [
+        "Choose appropriate communication channel",
+        "Be interested in the subjects",
+        "Both 1 and 2",
+        "Lack interest of subject"
+      ],
+      correct: 2,
+      explanation: "اختيار قناة مناسبة مع اهتمام حقيقي بالموضوع أساس لرسالة فعّالة."
+    },
+    {
+      id: 27,
+      part: "Group A",
+      category: "Communication",
+      en: "…… is the person to whom messages is directed.",
+      ar: "الشخص الذي تُوجَّه إليه الرسائل هو:",
+      options: [
+        "Sender",
+        "Receiver",
+        "Channel",
+        "Messages"
+      ],
+      correct: 1,
+      explanation: "المستقبل هو الطرف الذي يستقبل الرسالة ويفسرها."
+    },
+    {
+      id: 28,
+      part: "Group A",
+      category: "Communication",
+      en: "….. is the final stage that the receiver reply to the sender according to understanding him to a particular topic.",
+      ar: "ما المرحلة النهائية التي يرد فيها المستقبل على المرسل وفقًا لفهمه للموضوع؟",
+      options: [
+        "Sending",
+        "Communication",
+        "Feedback",
+        "Receiving"
+      ],
+      correct: 2,
+      explanation: "التغذية الراجعة (Feedback) هي رد فعل المستقبل الذي يوضح مدى فهمه للرسالة."
+    },
+    {
+      id: 29,
+      part: "Group A",
+      category: "Communication",
+      en: "As regards nonverbal communication advantages, which is correct?",
+      ar: "بالنسبة لمزايا الاتصال غير اللفظي، أي مما يلي صحيح؟",
+      options: [
+        "Need words",
+        "Do not need understanding or interpretation",
+        "More reliable than verbal",
+        "Need high voice"
+      ],
+      correct: 2,
+      explanation: "الإشارات غير اللفظية غالبًا تعكس المشاعر الحقيقية، لذلك تعتبر أكثر موثوقية من الكلام."
+    },
+    {
+      id: 30,
+      part: "Group A",
+      category: "Communication",
+      en: "All the following are requirements of effective communication which of the following is not correct?",
+      ar: "كل ما يلي من متطلبات الاتصال الفعّال ما عدا:",
+      options: [
+        "Clear, concise messages",
+        "Relevant messages",
+        "Meaningful messages",
+        "Non relevant messages"
+      ],
+      correct: 3,
+      explanation: "كون الرسالة غير مرتبطة بالموضوع يجعلها عائقًا لا متطلبًا للاتصال الفعّال."
+    } ,
+        {
+      id: 31,
+      part: "Group A",
+      category: "Communication",
+      en: "Criteria of effective nonverbal communicator include which of the following?",
+      ar: "أي من التالي من معايير المتواصل غير اللفظي الفعّال؟",
+      options: [
+        "Use clear voice",
+        "Establish eye contact with appropriate facial expression",
+        "Use words",
+        "Use meaningful speech"
+      ],
+      correct: 1,
+      explanation: "التواصل غير اللفظي الفعّال يعتمد على تواصل بصري مناسب مع تعبيرات وجه معبّرة."
+    },
+    {
+      id: 32,
+      part: "Group A",
+      category: "Communication",
+      en: "….is considered as a barrier of communication.",
+      ar: "أي مما يلي يُعتبر عائقًا أمام الاتصال؟",
+      options: [
+        "Proper channel",
+        "Improper channel",
+        "Good channel",
+        "Relevant channel"
+      ],
+      correct: 1,
+      explanation: "استخدام قناة غير مناسبة يؤدي إلى سوء فهم أو عدم وصول الرسالة."
+    },
+    {
+      id: 33,
+      part: "Group A",
+      category: "Communication",
+      en: "Teaching is defined as……. ",
+      ar: "ما هو التعريف الصحيح للتدريس؟",
+      options: [
+        "Interaction between teacher and learner to bring expected changes in behavior of learner",
+        "Interaction between learners and clients",
+        "Interaction between groups",
+        "Interaction between clients"
+      ],
+      correct: 0,
+      explanation: "التدريس يهدف إلى إحداث تغيير متوقَّع في سلوك المتعلم من خلال تفاعل مع المعلم."
+    },
+    {
+      id: 34,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard rules of motivation which of the following is correct?",
+      ar: "بالنسبة لقواعد الدافعية، أي مما يلي صحيح؟",
+      options: [
+        "Do not finish what you start",
+        "Do not socialize with other of similar interest",
+        "Take risk and set a major goal",
+        "Do not learn how to learn"
+      ],
+      correct: 2,
+      explanation: "وضع أهداف كبيرة مع الاستعداد للمخاطرة يساعد على تعزيز الدافعية وتحقيق الإنجاز."
+    },
+    {
+      id: 35,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is not a barrier of communication?",
+      ar: "أي مما يلي لا يُعد عائقًا أمام الاتصال؟",
+      options: [
+        "Lack of interest",
+        "Good language use",
+        "Anxiety",
+        "Impaired visual and auditory channel"
+      ],
+      correct: 1,
+      explanation: "استخدام لغة جيدة يدعم الاتصال ولا يعيقه، بينما باقي العوامل تقلل كفاءة التواصل."
+    },
+    {
+      id: 36,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are considered barriers of messages in communication?",
+      ar: "أي من التالي يُعتبر من عوائق الرسائل في عملية الاتصال؟",
+      options: [
+        "Difficult and irrelevant messages",
+        "Very easy messages",
+        "Clear messages",
+        "Complete messages"
+      ],
+      correct: 0,
+      explanation: "الرسائل الصعبة وغير المرتبطة بالموضوع تُربك المستقبل وتعيق الفهم."
+    },
+    {
+      id: 37,
+      part: "Group A",
+      category: "Communication",
+      en: "For uncomfortable settings which of the following is correct?",
+      ar: "في حالة بيئة غير مريحة، أي مما يلي صحيح؟",
+      options: [
+        "Irrelevant in communication process",
+        "Are not essentials for communication",
+        "Are barriers of communication",
+        "Receiver can hear and concentrate with the sender"
+      ],
+      correct: 2,
+      explanation: "البيئة غير المريحة (ضوضاء، ازدحام، حرارة…) تُعتبر عائقًا أمام الاتصال الفعّال."
+    },
+    {
+      id: 38,
+      part: "Group A",
+      category: "Communication",
+      en: "As regards upwards communication which is true?",
+      ar: "بالنسبة للاتصال الصاعد، أي مما يلي صحيح؟",
+      options: [
+        "From below downward",
+        "Nondirective",
+        "Give information",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الاتصال الصاعد يكون من المستويات الأدنى للأعلى عادة لنقل المعلومات والمشكلات للإدارة."
+    },
+    {
+      id: 39,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is considered correct for the verbal communication?",
+      ar: "أي مما يلي يُعتبر صحيحًا بخصوص الاتصال اللفظي؟",
+      options: [
+        "Need open ended technique",
+        "Close ended technique (= direct question)",
+        "Open and close ended technique",
+        "Not relevant to the end of conservation"
+      ],
+      correct: 2,
+      explanation: "الاتصال اللفظي الفعّال يستخدم مزيجًا من الأسئلة المفتوحة والمغلقة حسب الهدف."
+    },
+    {
+      id: 40,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is correct for nonverbal communication?",
+      ar: "أي مما يلي صحيح عن الاتصال غير اللفظي؟",
+      options: [
+        "Direct questioning",
+        "Need words",
+        "Person has less conscious control over his nonverbal behavior",
+        "Person has good conscious control"
+      ],
+      correct: 2,
+      explanation: "غالبًا ما تكون الإشارات غير اللفظية تلقائية وغير خاضعة لسيطرة كاملة من الشخص."
+    },
+    {
+      id: 41,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is the characteristic of nonverbal communication?",
+      ar: "أي مما يلي من خصائص الاتصال غير اللفظي؟",
+      options: [
+        "Need good observation",
+        "More reliable than verbal communication",
+        "Need interpretation",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "لفهم السلوك غير اللفظي نحتاج ملاحظة وتفسيرًا، وغالبًا يكون أكثر صدقًا من الكلام."
+    },
+    {
+      id: 42,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is the disadvantage of individual approach teaching?",
+      ar: "أي مما يلي من عيوب أسلوب التدريس الفردي؟",
+      options: [
+        "High cost",
+        "Economic",
+        "Positive attituded development",
+        "Low cost"
+      ],
+      correct: 0,
+      explanation: "التدريس الفردي يحتاج وقتًا وجهدًا أكبر لكل متعلم؛ لذلك يعتبر أعلى تكلفة."
+    },
+    {
+      id: 43,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is correct for the characteristic of good communicator channel?",
+      ar: "أي مما يلي صحيح من خصائص قناة الاتصال الجيدة؟",
+      options: [
+        "Appropriate",
+        "Affordable",
+        "Appealing",
+        "All of the above"
+      ],
+      correct: 3,
+      explanation: "القناة الجيدة تكون مناسبة، غير مُكلِفة بشكل مبالغ فيه، وجذابة للمتلقين."
+    },
+    {
+      id: 44,
+      part: "Group A",
+      category: "Communication",
+      en: "As regards communication, feedback should not be.",
+      ar: "بالنسبة للاتصال، لا ينبغي أن تكون التغذية الراجعة:",
+      options: [
+        "Absent feedback",
+        "Relevant feedback",
+        "Good feedback",
+        "Complete direct feedback"
+      ],
+      correct: 0,
+      explanation: "غياب التغذية الراجعة يمنع معرفة ما إذا كانت الرسالة فُهمت أم لا."
+    },
+    {
+      id: 45,
+      part: "Group A",
+      category: "Communication",
+      en: "Responsibility of sender is:",
+      ar: "من مسؤوليات المرسل:",
+      options: [
+        "Discourage his receivers",
+        "Encourage the receivers",
+        "Has no relation to his team",
+        "Work alone"
+      ],
+      correct: 1,
+      explanation: "المرسل الجيد يشجع متلقيه ويحفزهم على المشاركة والاستجابة."
+    },
+    {
+      id: 46,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is the definition of health education?",
+      ar: "أي من التالي هو التعريف الصحيح للتثقيف الصحي؟",
+      options: [
+        "Combination of learning experience designed to facilitate voluntary action conductive to health",
+        "It is un voluntary action",
+        "It is not force",
+        "Unhealthy behavior"
+      ],
+      correct: 0,
+      explanation: "التثقيف الصحي هو خبرات تعليمية تهدف إلى تسهيل أفعال اختيارية تعزز الصحة."
+    },
+    {
+      id: 47,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard the role of the teacher which of the following is not correct?",
+      ar: "بالنسبة لدور المعلم، أي مما يلي غير صحيح؟",
+      options: [
+        "Planner",
+        "Clarifier",
+        "Stimulator",
+        "Volunteer"
+      ],
+      correct: 3,
+      explanation: "المعلم يؤدي أدوارًا مهنية مخططة؛ كونه متطوعًا ليس من خصائص الدور الرسمي."
+    },
+    {
+      id: 48,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard nonverbal communication represents?",
+      ar: "الاتصال غير اللفظي يمثل تقريبًا نسبة:",
+      options: [
+        "90%",
+        "80%",
+        "70%",
+        "10%"
+      ],
+      correct: 0,
+      explanation: "يُشار غالبًا إلى أن معظم الرسائل في التفاعل الإنساني تُنقل بشكل غير لفظي."
+    },
+    {
+      id: 49,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is considered correct for verbal communication?",
+      ar: "أي مما يلي يُعتبر صحيحًا عن الاتصال اللفظي؟",
+      options: [
+        "Need words to express emotions",
+        "Active listening",
+        "Direct questioning",
+        "All of the above"
+      ],
+      correct: 3,
+      explanation: "الاتصال اللفظي يجمع بين استخدام الكلمات والاستماع الجيد وطرح أسئلة مباشرة."
+    },
+    {
+      id: 50,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is the characteristic of nonverbal communication?",
+      ar: "أي مما يلي من خصائص الاتصال غير اللفظي؟",
+      options: [
+        "Easy communication",
+        "NOT reliable than verbal communication",
+        "Do not need observation",
+        "Can be use with deaf and mute persons"
+      ],
+      correct: 3,
+      explanation: "الاتصال غير اللفظي مناسب للتواصل مع الصم والبكم لأنه يعتمد على الإشارة لا الكلام."
+    },
+    {
+      id: 51,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for an effective verbal communicator?",
+      ar: "أي مما يلي صحيح لمتواصل لفظي فعّال؟",
+      options: [
+        "Encourages empathically",
+        "Depend on eye contact",
+        "Depend on facial expression",
+        "Depend on body language"
+      ],
+      correct: 0,
+      explanation: "التشجيع المتعاطف يساعد على بناء علاقة ثقة بين المرسل والمتلقي."
+    },
+    {
+      id: 52,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is a level of communication?",
+      ar: "أي من التالي يُعد مستوى من مستويات الاتصال؟",
+      options: [
+        "Downwards communication",
+        "Upwards communication",
+        "Horizontal communication",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "المستويات الثلاثة السابقة هي المستويات الشائعة في الهياكل التنظيمية."
+    },
+    {
+      id: 53,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is correct about the characteristic of good communicator channel?",
+      ar: "أي مما يلي صحيح عن خصائص قناة الاتصال الجيدة؟",
+      options: [
+        "Appropriate",
+        "Affordable",
+        "Appealing",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "القناة الجيدة يجب أن تكون مناسبة، مقبولة التكلفة، وجذابة للمتلقي."
+    },
+    {
+      id: 54,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are correct for nonverbal communication?",
+      ar: "أي من التالي صحيح عن الاتصال غير اللفظي؟",
+      options: [
+        "Use body language",
+        "Facial expression",
+        "Eye contact",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "جميع هذه المظاهر تعتبر وسائل للتواصل غير اللفظي."
+    },
+    {
+      id: 55,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are considered methods of nonverbal communication?",
+      ar: "أي من التالي يُعتبر من وسائل الاتصال غير اللفظي؟",
+      options: [
+        "Use high sounds",
+        "Use clear words",
+        "Use understanding words",
+        "Use body language"
+      ],
+      correct: 3,
+      explanation: "لغة الجسد وسيلة رئيسية للتواصل غير اللفظي، بينما الباقي لفظي."
+    },
+    {
+      id: 56,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is considered true for verbal communication?",
+      ar: "أي من التالي صحيح عن الاتصال اللفظي؟",
+      options: [
+        "Use words",
+        "Eye to eye contact",
+        "Facial expression",
+        "Touch"
+      ],
+      correct: 0,
+      explanation: "السمة المميزة للاتصال اللفظي هي استخدام الكلمات."
+    },
+    {
+      id: 57,
+      part: "Group A",
+      category: "Communication",
+      en: "For nonverbal communication, method which is not correct?",
+      ar: "في الاتصال غير اللفظي، أي من الوسائل التالية غير صحيحة؟",
+      options: [
+        "More reliable",
+        "Not reliable",
+        "Touch receiver",
+        "Eye to eye contact"
+      ],
+      correct: 1,
+      explanation: "الاتصال غير اللفظي غالبًا أكثر موثوقية؛ لذلك اعتباره غير موثوق غير صحيح."
+    },
+    {
+      id: 58,
+      part: "Group A",
+      category: "Communication",
+      en: "An effective verbal communication include which of the following?",
+      ar: "الاتصال اللفظي الفعّال يتضمن أيًّا مما يلي؟",
+      options: [
+        "Clarifies listen acknowledges, and repeats",
+        "Relax",
+        "Open up",
+        "Eye contact"
+      ],
+      correct: 0,
+      explanation: "دمج التوضيح مع الاستماع والاعتراف بما يقوله المتلقي وإعادة صياغته يعكس تواصلًا فعّالًا."
+    },
+    {
+      id: 59,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is the type of communication?",
+      ar: "أي من التالي نوع من أنواع الاتصال؟",
+      options: [
+        "Verbal only",
+        "Nonverbal only",
+        "Intermediate",
+        "Verbal and nonverbal communication"
+      ],
+      correct: 3,
+      explanation: "الاتصال في الواقع يجمع بين اللفظي وغير اللفظي في نفس الموقف."
+    },
+    {
+      id: 60,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is NOT the level of communication?",
+      ar: "أي من التالي ليس مستوى من مستويات الاتصال؟",
+      options: [
+        "Downward communication",
+        "Upwards communication",
+        "Lateral communication",
+        "Vertical communication"
+      ],
+      correct: 3,
+      explanation: "التقسيم هنا يذكر Downward وUpwards وLateral كمستويات؛ Vertical مصطلح أوسع وليس مستوى محدد."
+    },
+        {
+      id: 61,
+      part: "Group A",
+      category: "Communication",
+      en: "…… defined as two way process involving passing messages to and from between sender and receiver?",
+      ar: "يُعرّف بأنه عملية ثنائية الاتجاه يتم فيها تبادل الرسائل بين المرسل والمستقبل:",
+      options: [
+        "Motivation",
+        "Communication",
+        "Health education code of ethics",
+        "Learning"
+      ],
+      correct: 1,
+      explanation: "الاتصال هو العملية التي يتم فيها تبادل الرسائل ذهابًا وإيابًا بين المرسل والمستقبل."
+    },
+    {
+      id: 62,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is not correct about the characteristic of good communicator channel?",
+      ar: "أي من التالي غير صحيح عن صفات قناة الاتصال الجيدة؟",
+      options: [
+        "Appropriate",
+        "Affordable",
+        "Appealing",
+        "Non appropriate channel"
+      ],
+      correct: 3,
+      explanation: "القناة الجيدة يجب أن تكون مناسبة وجذابة ومعتدلة التكلفة؛ القناة غير المناسبة عكس ذلك."
+    },
+    {
+      id: 63,
+      part: "Group A",
+      category: "Communication",
+      en: "….. refer to the way by which the message is sent.",
+      ar: "المصطلح الذي يشير إلى الوسيلة التي تُرسل بها الرسالة هو:",
+      options: [
+        "Channel",
+        "Feedback",
+        "Message",
+        "Conversation"
+      ],
+      correct: 0,
+      explanation: "القناة (Channel) هي الوسيط أو الطريق الذي تنتقل من خلاله الرسالة."
+    },
+    {
+      id: 64,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are character of good senders?",
+      ar: "أي مما يلي من صفات المرسل الجيد؟",
+      options: [
+        "Know the subject well",
+        "Be interested in the subject",
+        "Know the audience member",
+        "All of the above"
+      ],
+      correct: 3,
+      explanation: "المرسل الجيد يفهم الموضوع وجمهوره ويهتم بالمحتوى الذي يقدمه."
+    },
+    {
+      id: 65,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are correct for verbal communication?",
+      ar: "أي من التالي صحيح عن الاتصال اللفظي؟",
+      options: [
+        "Use touch",
+        "Use words in communication",
+        "Facial expression",
+        "Use eye contact"
+      ],
+      correct: 1,
+      explanation: "العلامة الفارقة في الاتصال اللفظي هي استخدام الكلمات منطوقة أو مكتوبة."
+    },
+    {
+      id: 66,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is true for downward communication?",
+      ar: "أي مما يلي صحيح عن الاتصال الهابط؟",
+      options: [
+        "From seniors to juniors",
+        "Directive",
+        "Give orders",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الاتصال الهابط يكون من الإدارة أو المستويات الأعلى إلى الأدنى لنقل الأوامر والتعليمات."
+    },
+    {
+      id: 67,
+      part: "Group A",
+      category: "Communication",
+      en: "Effective communication needs messages to be?",
+      ar: "لتحقيق اتصال فعّال يجب أن تكون الرسائل:",
+      options: [
+        "Timely",
+        "Meaningful",
+        "Both 1 and 2",
+        "Not suitable to the situation"
+      ],
+      correct: 2,
+      explanation: "الرسالة الفعّالة تصل في الوقت المناسب وتحمل معنى واضحًا ومفيدًا."
+    },
+    {
+      id: 68,
+      part: "Group A",
+      category: "Communication",
+      en: "The upwards communication is",
+      ar: "الاتصال الصاعد يكون:",
+      options: [
+        "From junior to senior",
+        "From senior to junior",
+        "Between students",
+        "Directive"
+      ],
+      correct: 0,
+      explanation: "الاتصال الصاعد ينتقل من المستويات الأدنى إلى الأعلى في السلم الإداري."
+    },
+    {
+      id: 69,
+      part: "Group A",
+      category: "Communication",
+      en: "….. is the final stage that the receiver reply to the sender according to understanding him to a particular topic",
+      ar: "المرحلة النهائية التي يرد فيها المستقبل على المرسل وفقًا لفهمه لموضوع معين هي:",
+      options: [
+        "Sending",
+        "Communication",
+        "Feedback",
+        "Receiving"
+      ],
+      correct: 2,
+      explanation: "التغذية الراجعة توضح للمرسل ما إذا كانت الرسالة قد فُهمت بالشكل المطلوب أم لا."
+    },
+    {
+      id: 70,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard nonverbal communication advantages which is correct?",
+      ar: "بالنسبة لمزايا الاتصال غير اللفظي، أي مما يلي صحيح؟",
+      options: [
+        "Need words",
+        "Do not need understanding or interpretation",
+        "Use with deaf and mute persons",
+        "Need high voice"
+      ],
+      correct: 2,
+      explanation: "الاتصال غير اللفظي مفيد مع الصم والبكم لأنه يعتمد على الإشارة لا الكلام."
+    },
+    {
+      id: 71,
+      part: "Group A",
+      category: "Communication",
+      en: "The following is character of good receiver:",
+      ar: "أي مما يلي من صفات المستقبل الجيد؟",
+      options: [
+        "Aware",
+        "Interested willing to accept message",
+        "Understand the value of message",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "المستقبل الجيد واعٍ، مهتم، ومستعد لاستقبال الرسالة وتقدير أهميتها."
+    },
+    {
+      id: 72,
+      part: "Group A",
+      category: "Communication",
+      en: "Criteria of effective nonverbal communicator include which of the following?",
+      ar: "أي من التالي من معايير المتواصل غير اللفظي الفعّال؟",
+      options: [
+        "Use clear voice",
+        "Establish eye contact with appropriate facial expression",
+        "Relaxes",
+        "2+3"
+      ],
+      correct: 3,
+      explanation: "التواصل غير اللفظي الفعّال يجمع بين تواصل بصري مناسب وتعبيرات وجه مريحة."
+    },
+    {
+      id: 73,
+      part: "Group A",
+      category: "Communication",
+      en: "Health education code of ethics is defined as……..",
+      ar: "مدونة أخلاقيات التثقيف الصحي تُعرّف بأنها:",
+      options: [
+        "Framework of shared values within which health education is practiced",
+        "Interaction between learners and clients",
+        "Interaction between doctors",
+        "Interaction between students"
+      ],
+      correct: 0,
+      explanation: "مدونة الأخلاقيات هي إطار قيمي مشترك يوجّه ممارسة التثقيف الصحي."
+    },
+    {
+      id: 74,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is correct for good nonverbal communication?",
+      ar: "أي مما يلي صحيح عن الاتصال غير اللفظي الجيد؟",
+      options: [
+        "Need good observation",
+        "Good analysis",
+        "Good interpretation",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "فهم الإشارات غير اللفظية يتطلب ملاحظة وتحليلًا وتفسيرًا جيدًا للسلوك."
+    },
+    {
+      id: 75,
+      part: "Group A",
+      category: "Communication",
+      en: "Upward communication which is correct?",
+      ar: "بالنسبة للاتصال الصاعد، أي مما يلي صحيح؟",
+      options: [
+        "Nondirective",
+        "From junior to senior",
+        "Inform problem",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الاتصال الصاعد يكون من المرؤوس للرئيس لنقل المعلومات أو المشكلات وغالبًا يكون غير توجيهي."
+    },
+    {
+      id: 76,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for downward communication?",
+      ar: "أي مما يلي صحيح عن الاتصال الهابط؟",
+      options: [
+        "From senior to junior",
+        "Nondirective",
+        "From junior to senior",
+        "Inform problem"
+      ],
+      correct: 0,
+      explanation: "الاتصال الهابط يأتي من المستويات الأعلى إلى الأدنى لنقل الأوامر والسياسات."
+    },
+    {
+      id: 77,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for lateral communication?",
+      ar: "أي مما يلي صحيح عن الاتصال الجانبي (الأفقي)؟",
+      options: [
+        "Between colleagues",
+        "At the same level",
+        "Share information to save time",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الاتصال الجانبي يكون بين زملاء في نفس المستوى لتبادل المعلومات بسرعة."
+    },
+    {
+      id: 78,
+      part: "Group A",
+      category: "Communication",
+      en: "For good receiver, which is correct?",
+      ar: "للمستقبل الجيد، أي مما يلي صحيح؟",
+      options: [
+        "Should be aware",
+        "Not listen well",
+        "Neglect the subject",
+        "Don’t have interest"
+      ],
+      correct: 0,
+      explanation: "المستقبل الجيد يجب أن يكون منتبهًا وواعياً للرسالة."
+    },
+    {
+      id: 79,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are barriers for communication?",
+      ar: "أي مما يلي يُعتبر من عوائق الاتصال؟",
+      options: [
+        "Have no interest",
+        "Anxiety",
+        "Impaired visual and auditory channel",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "فقدان الاهتمام والقلق وضعف السمع أو البصر كلها تقلل كفاءة التواصل."
+    },
+    {
+      id: 80,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are essentials for good communication?",
+      ar: "أي مما يلي من أساسيات الاتصال الجيد؟",
+      options: [
+        "Good atmosphere",
+        "Comfortable setting",
+        "Good light",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "البيئة المريحة والإضاءة الجيدة تسهّل التركيز والتفاعل خلال التواصل."
+    },
+    {
+      id: 81,
+      part: "Group A",
+      category: "Communication",
+      en: "Effective communication require message should be:",
+      ar: "يتطلب الاتصال الفعّال أن تكون الرسالة:",
+      options: [
+        "Hazy message",
+        "Unclear message",
+        "Irrelevant message",
+        "Clear, concise, and accurate"
+      ],
+      correct: 3,
+      explanation: "الرسالة الواضحة المختصرة الدقيقة أساس لأي تواصل ناجح."
+    },
+    {
+      id: 82,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is considered correct for body language in communication?",
+      ar: "أي مما يلي يُعد صحيحًا عن لغة الجسد في الاتصال؟",
+      options: [
+        "Can use touch",
+        "Cannot use eye contact",
+        "Not important in communication",
+        "Irrelevant"
+      ],
+      correct: 0,
+      explanation: "لغة الجسد تشمل اللمس كإشارة غير لفظية تعبّر عن الدعم أو التعاطف."
+    },
+    {
+      id: 83,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is true for a student?",
+      ar: "أي مما يلي صحيح بالنسبة للطالب في عملية الاتصال؟",
+      options: [
+        "He is sender",
+        "He is receiver",
+        "He is teacher",
+        "He cannot give feedback"
+      ],
+      correct: 1,
+      explanation: "الطالب غالبًا يكون المستقبل الأساسي للمعلومة، مع إمكانية أن يصبح مرسلاً في أنشطة أخرى."
+    },
+    {
+      id: 84,
+      part: "Group A",
+      category: "Communication",
+      en: "…… is basic component of human relationship.",
+      ar: "….. هو المكوّن الأساسي للعلاقة الإنسانية.",
+      options: [
+        "Education",
+        "Communication",
+        "Teaching",
+        "Learning"
+      ],
+      correct: 1,
+      explanation: "الاتصال هو الأساس الذي تُبنى عليه كل العلاقات الإنسانية."
+    },
+        {
+      id: 85,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is correct for teacher?",
+      ar: "أي مما يلي صحيح عن المدرس؟",
+      options: [
+        "He is good sender",
+        "He is receiver",
+        "He is learner",
+        "He is patient"
+      ],
+      correct: 0,
+      explanation: "المعلم الجيد يُعد مرسِلًا فعّالًا للرسائل التعليمية للطلاب."
+    },
+    {
+      id: 86,
+      part: "Group A",
+      category: "Communication",
+      en: "What is the responsibility of health education?",
+      ar: "ما هي مسؤولية التثقيف الصحي؟",
+      options: [
+        "To meet the challenges of the new millennium",
+        "Has no role",
+        "Has minimal role in maintain health",
+        "Cannot encourage his team"
+      ],
+      correct: 0,
+      explanation: "التثقيف الصحي يهدف إلى مواجهة تحديات العصر من خلال تحسين وعي وصحة المجتمع."
+    },
+    {
+      id: 87,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are ways and methods of health education?",
+      ar: "أي مما يلي من أساليب وطرق التثقيف الصحي؟",
+      options: [
+        "Direct methods only",
+        "Indirect methods only",
+        "Direct and indirect methods",
+        "Mass media"
+      ],
+      correct: 2,
+      explanation: "التثقيف الصحي يُقدّم بطرق مباشرة كالمحاضرات، وغير مباشرة كالإعلام والمواد المطبوعة."
+    },
+    {
+      id: 88,
+      part: "Group A",
+      category: "Communication",
+      en: "What are the levels of health education?",
+      ar: "ما هي مستويات التثقيف الصحي؟",
+      options: [
+        "Individual approach",
+        "Group approach",
+        "General approach",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "التثقيف الصحي يُنفّذ على مستوى الفرد والمجموعة والمستوى المجتمعي العام."
+    },
+    {
+      id: 89,
+      part: "Group A",
+      category: "Communication",
+      en: "Which are advantages of individual approach?",
+      ar: "أي مما يلي من مزايا أسلوب التثقيف الفردي؟",
+      options: [
+        "Flexibility",
+        "Promote opportunity",
+        "Building up motivation",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الأسلوب الفردي مرن، يتيح فرصًا شخصية، ويساعد على بناء دافعية المتعلم."
+    },
+    {
+      id: 90,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for lateral communication?",
+      ar: "أي مما يلي صحيح عن الاتصال الجانبي؟",
+      options: [
+        "Between colleagues",
+        "From seniors",
+        "From juniors",
+        "From seniors to juniors"
+      ],
+      correct: 0,
+      explanation: "الاتصال الجانبي يكون بين زملاء في نفس المستوى الوظيفي."
+    },
+    {
+      id: 91,
+      part: "Group A",
+      category: "Communication",
+      en: "For good sender which is correct?",
+      ar: "بالنسبة للمرسل الجيد، أي مما يلي صحيح؟",
+      options: [
+        "Should speak at the level of audience",
+        "Not listen well",
+        "Neglect the subject",
+        "Do not have interest"
+      ],
+      correct: 0,
+      explanation: "على المرسل أن يتحدث بلغة ومستوى يفهمه الجمهور ليستوعب الرسالة."
+    },
+    {
+      id: 92,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are disadvantages of individual health education?",
+      ar: "أي مما يلي من عيوب أسلوب التثقيف الصحي الفردي؟",
+      options: [
+        "High cost of teaching team",
+        "Lack of sharing between team",
+        "1+2",
+        "Low cost"
+      ],
+      correct: 2,
+      explanation: "التثقيف الفردي يحتاج موارد أكثر ولا يشجع على تبادل الخبرات بين المتعلمين."
+    },
+    {
+      id: 93,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are essentials for good communication?",
+      ar: "أي مما يلي من أساسيات الاتصال الجيد؟",
+      options: [
+        "Good atmosphere",
+        "Comfortable setting",
+        "Good light",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الجو المريح والإضاءة المناسبة يساعدان على الانتباه وفهم الرسائل."
+    },
+    {
+      id: 94,
+      part: "Group A",
+      category: "Communication",
+      en: "Small group teaching includes",
+      ar: "التدريس في المجموعات الصغيرة يشمل:",
+      options: [
+        "2–5 individuals",
+        "6–30 individuals",
+        "40 individuals",
+        "60 individuals"
+      ],
+      correct: 0,
+      explanation: "المجموعة الصغيرة عادة تكون من 2 إلى 5 أفراد لزيادة التفاعل."
+    },
+    {
+      id: 95,
+      part: "Group A",
+      category: "Communication",
+      en: "Medium sized group include:",
+      ar: "المجموعة متوسطة الحجم تشمل:",
+      options: [
+        "2–5 individuals",
+        "6–30 individuals",
+        "40 individuals",
+        "60 individuals"
+      ],
+      correct: 1,
+      explanation: "المجموعة المتوسطة غالبًا ما تتراوح بين 6 و30 فردًا."
+    },
+    {
+      id: 96,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is true for large group teaching?",
+      ar: "أي مما يلي صحيح عن التدريس للمجموعات الكبيرة؟",
+      options: [
+        "Economic",
+        "Foster positive attitude of development",
+        "Mass media",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "التدريس لمجموعات كبيرة يكون أقل تكلفة، ويستخدم أحيانًا وسائل الإعلام، ويساعد في تغيير الاتجاهات."
+    },
+    {
+      id: 97,
+      part: "Group A",
+      category: "Communication",
+      en: "Prenatal care consider is",
+      ar: "يُعتبر تثقيف رعاية ما قبل الولادة من:",
+      options: [
+        "Small size group of health education",
+        "Medim sized group",
+        "Large size group",
+        "Learning"
+      ],
+      correct: 1,
+      explanation: "جلسات رعاية ما قبل الولادة تُقدَّم غالبًا في مجموعات متوسطة الحجم من الأمهات."
+    },
+    {
+      id: 98,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is correct for individual approach?",
+      ar: "أي مما يلي صحيح عن أسلوب التثقيف الفردي؟",
+      options: [
+        "Home visit",
+        "Personal contact",
+        "Personal letters",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الزيارة المنزلية والاتصال الشخصي والرسائل الفردية كلها أمثلة للتثقيف الفردي."
+    },
+    {
+      id: 99,
+      part: "Group A",
+      category: "Communication",
+      en: "Group approach of health education include",
+      ar: "أي مما يلي يدخل في أسلوب التثقيف الصحي الجماعي؟",
+      options: [
+        "Lectures",
+        "Conferences",
+        "Work shops",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "المحاضرات والمؤتمرات وورش العمل كلها تقدم التثقيف لمجموعة من الأفراد."
+    },
+    {
+      id: 100,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is correct for mass approach of health education?",
+      ar: "أي مما يلي صحيح عن أسلوب التثقيف الصحي الجماهيري؟",
+      options: [
+        "Mass media",
+        "Television",
+        "Radio",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "أسلوب التثقيف الجماهيري يعتمد على وسائل الإعلام كالتلفزيون والراديو للوصول لعدد كبير."
+    },
+        {
+      id: 101,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for individual health education approach advantages?",
+      ar: "أي مما يلي من مزايا أسلوب التثقيف الصحي الفردي؟",
+      options: [
+        "Active learner role which build up motivation",
+        "Low cost of staff time",
+        "No Flexibility",
+        "No sharing between team"
+      ],
+      correct: 0,
+      explanation: "الأسلوب الفردي يجعل المتعلم نشطًا، ما يساعد على بناء الدافعية وتحسين التعلم."
+    },
+    {
+      id: 102,
+      part: "Group A",
+      category: "Communication",
+      en: "…… defined as two way process involving passing messages to and from between sender and receiver?",
+      ar: "يُعرّف بأنه عملية ثنائية لنقل الرسائل من وإلى المرسل والمستقبل:",
+      options: [
+        "Ethics",
+        "Communication",
+        "Learning",
+        "Teaching"
+      ],
+      correct: 1,
+      explanation: "الاتصال هو تبادل الرسائل بين المرسل والمستقبل في اتجاهين."
+    },
+    {
+      id: 103,
+      part: "Group A",
+      category: "Communication",
+      en: "Health education should start from …..",
+      ar: "يُفضّل أن يبدأ التثقيف الصحي من:",
+      options: [
+        "Complex to simple",
+        "Simple to complex",
+        "Any point as his desire",
+        "More difficult point"
+      ],
+      correct: 1,
+      explanation: "البدء من البسيط إلى المعقد يسهل الفهم التدريجي للمحتوى الصحي."
+    },
+    {
+      id: 104,
+      part: "Group A",
+      category: "Communication",
+      en: "Goals of health education include which of the following?",
+      ar: "أي مما يلي من أهداف التثقيف الصحي؟",
+      options: [
+        "To reduce the risk of preventable diseases",
+        "Can not identify the community needs",
+        "Do not help people to make decisions about their health",
+        "Irrelevant to community needs"
+      ],
+      correct: 0,
+      explanation: "هدف أساسي للتثقيف الصحي هو تقليل مخاطر الأمراض القابلة للوقاية عبر تغيير السلوك."
+    },
+    {
+      id: 105,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are considered barriers of messages in communication?",
+      ar: "أي من التالي يُعتبر من عوائق الرسائل في الاتصال؟",
+      options: [
+        "Difficult and irrelevant messages",
+        "Very easy messages",
+        "Clear messages",
+        "Complete messages"
+      ],
+      correct: 0,
+      explanation: "الرسائل الصعبة وغير المرتبطة بالموضوع تُربك المستقبل وتمنع الفهم الجيد."
+    },
+    {
+      id: 106,
+      part: "Group A",
+      category: "Communication",
+      en: "For uncomfortable settings which of the following is correct?",
+      ar: "في بيئة غير مريحة، أي مما يلي صحيح؟",
+      options: [
+        "Irrelevant in communication process",
+        "Are not essentials for communication",
+        "Are barriers of communication",
+        "Receiver can hear and concentrate with the sender"
+      ],
+      correct: 2,
+      explanation: "الجلوس غير المريح أو الضوضاء والازدحام تُعد من عوائق الاتصال."
+    },
+    {
+      id: 107,
+      part: "Group A",
+      category: "Communication",
+      en: "Health educator defined as ……",
+      ar: "يُعرّف المثقِّف الصحي بأنه:",
+      options: [
+        "The one who cannot identify community needs",
+        "The one who adopt unhealthy behaviors",
+        "Is the learner",
+        "The one who promotes, maintains and improves individual and community health"
+      ],
+      correct: 3,
+      explanation: "المثقف الصحي يعمل على تعزيز وصيانة وتحسين صحة الأفراد والمجتمع."
+    },
+    {
+      id: 108,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are considered correct for the role of the health educator?",
+      ar: "أي مما يلي يُعد صحيحًا من أدوار المثقف الصحي؟",
+      options: [
+        "Planning health education program",
+        "Can not develop social marketing",
+        "Can not design health education program",
+        "Cannot implement health education program"
+      ],
+      correct: 0,
+      explanation: "من أدوار المثقف الصحي المشاركة في تخطيط برامج التثقيف الصحي."
+    },
+    {
+      id: 109,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is not correct for sources of motivation?",
+      ar: "أي مما يلي غير صحيح كمصدر من مصادر الدافعية؟",
+      options: [
+        "Behavioral",
+        "Social",
+        "Cognitive, affective and conative",
+        "Socioeconomic"
+      ],
+      correct: 3,
+      explanation: "المصادر الأساسية للدافعية تكون سلوكية واجتماعية ومعرفية وانفعالية أكثر من كونها اقتصادية بحتة."
+    },
+    {
+      id: 110,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard rules of motivation which of the following is correct?",
+      ar: "بالنسبة لقواعد الدافعية، أي من التالي صحيح؟",
+      options: [
+        "Do not finish what you start",
+        "Do not socialize with other of similar interest",
+        "Take risk and set a major goal",
+        "Do not learn how to learn"
+      ],
+      correct: 2,
+      explanation: "وضع أهداف كبيرة وقبول المخاطرة يساعد على تنمية الدافعية والإنجاز."
+    },
+    {
+      id: 111,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard physical teaching learning atmosphere should be",
+      ar: "بالنسبة للبيئة المادية للتعليم، يجب أن تكون:",
+      options: [
+        "Uncomfortable settings",
+        "Good ventilation, air conditioning and suitable light",
+        "Bad light",
+        "Narrow distances between desks"
+      ],
+      correct: 1,
+      explanation: "التهوية الجيدة وتكييف مناسب وإضاءة ملائمة ضرورية لتعلم فعّال."
+    },
+    {
+      id: 112,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is not a character of educational objectives?",
+      ar: "أي مما يلي ليس من خصائص الأهداف التعليمية؟",
+      options: [
+        "Relevant",
+        "Irrelevant",
+        "Observable",
+        "Measurable"
+      ],
+      correct: 1,
+      explanation: "يجب أن تكون الأهداف ذات صلة، قابلة للملاحظة والقياس؛ عدم الصلة يجعل الهدف غير مناسب."
+    },
+    {
+      id: 113,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is ideal learning definition?",
+      ar: "أي من التالي هو التعريف المثالي للتعلّم؟",
+      options: [
+        "The process, the end result of which is relatively permanent changes of learner’s behavior capability",
+        "Interaction between learners and teachers without changes in the learner’s behavior",
+        "Interaction between clients",
+        "Non change process in learner’s behaviors"
+      ],
+      correct: 0,
+      explanation: "التعلم الحقيقي ينعكس في تغيّر شبه دائم في سلوك المتعلم أو قدراته."
+    },
+    {
+      id: 114,
+      part: "Group A",
+      category: "Communication",
+      en: "….is considered as a barrier of communication.",
+      ar: "أي مما يلي يُعتبر عائقًا للاتصال؟",
+      options: [
+        "Proper channel",
+        "Improper channel",
+        "Good channel",
+        "Relevant channel"
+      ],
+      correct: 1,
+      explanation: "القناة غير المناسبة تؤدي لسوء الفهم أو عدم وصول الرسالة."
+    },
+    {
+      id: 115,
+      part: "Group A",
+      category: "Communication",
+      en: "Group approach method of education include which of the following?",
+      ar: "أي من التالي يدخل ضمن أساليب التعليم الجماعي؟",
+      options: [
+        "Television",
+        "Home visit",
+        "Lecture",
+        "Internet"
+      ],
+      correct: 2,
+      explanation: "المحاضرة مثال مباشر لتقديم التعليم لمجموعة من المتعلمين."
+    },
+    {
+      id: 116,
+      part: "Group A",
+      category: "Communication",
+      en: "Group approach of health education include which of the following?",
+      ar: "أي من التالي يُعد من أساليب التثقيف الصحي الجماعي؟",
+      options: [
+        "Internet",
+        "Lectures, workshops, seminars",
+        "Hom visit",
+        "Television"
+      ],
+      correct: 1,
+      explanation: "المحاضرات وورش العمل والندوات أمثلة واضحة لتثقيف صحي لمجموعات."
+    },
+    {
+      id: 117,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for essentials of communication?",
+      ar: "أي مما يلي يُعد من أساسيات الاتصال؟",
+      options: [
+        "Do not mutter in angers",
+        "Go to the conclusion",
+        "Interrupt the speaker",
+        "Use medical terminology difficult to be understand"
+      ],
+      correct: 0,
+      explanation: "عدم التمتمة أو الكلام بغضب يساعد على نقل رسالة واضحة ومحترمة."
+    },
+    {
+      id: 118,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for barriers of communication?",
+      ar: "أي مما يلي يُعد من عوائق الاتصال؟",
+      options: [
+        "Go to conclusion",
+        "Don’t matter in anger",
+        "Interrupt the speaker",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "القفز للنتائج أو الانفعال أو مقاطعة المتحدث جميعها تقلل كفاءة التواصل."
+    },
+    {
+      id: 119,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard use of medical terminology difficult to be understood considered?",
+      ar: "استخدام مصطلحات طبية صعبة الفهم يُعتبر:",
+      options: [
+        "Essentials of communication",
+        "Barriers of communication",
+        "Relevant to communication",
+        "Irrelevant to communication"
+      ],
+      correct: 1,
+      explanation: "استخدام مصطلحات معقدة مع غير المتخصصين يعيق فهم الرسالة ويُعد عائقًا."
+    },
+    {
+      id: 120,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for barriers of communication?",
+      ar: "أي مما يلي يُعد من عوائق الاتصال؟",
+      options: [
+        "Lack of privacy",
+        "Noise",
+        "Over crowding",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "عدم الخصوصية والضوضاء والازدحام كلها ظروف تُضعف التواصل."
+    },
+    {
+      id: 121,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for motivation?",
+      ar: "أي مما يلي صحيح عن الدافعية؟",
+      options: [
+        "Develop love to learn",
+        "Overcome barriers",
+        "Fear is not a motivator",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الدافعية الحقيقية تنمّي حب التعلم وتساعد على تخطي العوائق ولا تعتمد على الخوف."
+    },
+    {
+      id: 122,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for individual health education approach advantages?",
+      ar: "أي مما يلي من مزايا أسلوب التثقيف الصحي الفردي؟",
+      options: [
+        "Active learner role which build up motivation",
+        "Low cost of staff time",
+        "No Flexibility",
+        "No coordination with other teams"
+      ],
+      correct: 0,
+      explanation: "يُشجّع المشاركة النشطة للمتعلم مما يزيد الدافعية."
+    },
+    {
+      id: 123,
+      part: "Group A",
+      category: "Communication",
+      en: "Factors affecting motivation includes:",
+      ar: "العوامل التي تؤثر في الدافعية تشمل:",
+      options: [
+        "Teacher",
+        "Learner",
+        "Environment",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "المعلم والمتعلم والبيئة التعليمية جميعها تؤثر في مستوى الدافعية."
+    },
+    {
+      id: 124,
+      part: "Group A",
+      category: "Communication",
+      en: "Role of teacher in motivation is:",
+      ar: "دور المعلم في الدافعية هو:",
+      options: [
+        "Discourages his team",
+        "Create worm learning atmosphere",
+        "Depress his team",
+        "Focus on faults and mistake"
+      ],
+      correct: 1,
+      explanation: "المعلم الجيد يخلق جو تعلم دافئًا ومشجعًا يدعم دافعية الطلاب."
+    },
+    {
+      id: 125,
+      part: "Group A",
+      category: "Communication",
+      en: "Essentials of communication are:",
+      ar: "من أساسيات الاتصال:",
+      options: [
+        "Do not jump to the conclusion",
+        "Jumps to conclusion",
+        "React instantly in anger",
+        "Interrupt the speakers"
+      ],
+      correct: 0,
+      explanation: "عدم القفز إلى النتائج قبل الاستماع الكامل يساعد على فهم أدق."
+    },
+    {
+      id: 126,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are role of environment in motivation?",
+      ar: "أي مما يلي من أدوار البيئة في الدافعية؟",
+      options: [
+        "Focus student attention",
+        "Distract the student",
+        "Has no role",
+        "Neglected role"
+      ],
+      correct: 0,
+      explanation: "البيئة الجيدة تساعد على تركيز انتباه الطلاب وتعزيز حماسهم."
+    },
+    {
+      id: 127,
+      part: "Group A",
+      category: "Communication",
+      en: "Motivation develops:",
+      ar: "الدافعية تُنمِّي:",
+      options: [
+        "Learn to love",
+        "Seek new opportunities",
+        "Barriers",
+        "1+2"
+      ],
+      correct: 3,
+      explanation: "وجود دافعية عالية يجعل الفرد يحب التعلم ويبحث عن فرص جديدة."
+    },
+    {
+      id: 128,
+      part: "Group A",
+      category: "Communication",
+      en: "Health educator defined as ……",
+      ar: "يُعرّف المثقف الصحي بأنه:",
+      options: [
+        "The one who can identify community needs",
+        "The one who adopt unhealthy behaviors",
+        "Is the learner",
+        "The one who cannot promotes community health"
+      ],
+      correct: 0,
+      explanation: "من مهام المثقف الصحي تحديد احتياجات المجتمع الصحية والعمل عليها."
+    },
+    {
+      id: 129,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following are considered not correct for the role of the health educator?",
+      ar: "أي مما يلي يُعتبر غير صحيح من أدوار المثقف الصحي؟",
+      options: [
+        "Planning health education program",
+        "Develop social marketing",
+        "Design health education program",
+        "Cannot implement health education program"
+      ],
+      correct: 3,
+      explanation: "من مهام المثقف الصحي تنفيذ البرامج، لذا قول إنه لا يستطيع تنفيذها غير صحيح."
+    },
+    {
+      id: 130,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is not correct for good senders?",
+      ar: "أي مما يلي غير صحيح عن المرسل الجيد؟",
+      options: [
+        "Speak well",
+        "Speak at the level of student",
+        "Know the subject well",
+        "No interest to subject"
+      ],
+      correct: 3,
+      explanation: "غياب الاهتمام بالموضوع لا يتوافق مع صفات المرسل الجيد."
+    },
+    {
+      id: 131,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard rules of motivation which of the following is correct?",
+      ar: "بالنسبة لقواعد الدافعية، أي مما يلي صحيح؟",
+      options: [
+        "Finish what you start",
+        "Socialize with other of similar interest",
+        "Take risk and set a major goal",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "إكمال ما تبدأه، والتفاعل مع من لديهم نفس الاهتمام، ووضع أهداف كبيرة كلها تدعم الدافعية."
+    },
+    {
+      id: 132,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard physical teaching learning atmosphere should be",
+      ar: "بالنسبة للبيئة المادية للتعليم، يجب أن تكون:",
+      options: [
+        "Comfortable settings",
+        "Good ventilation air conditioning",
+        "Good light",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "بيئة مريحة جيدة التهوية والإضاءة تساعد على التعلم الفعّال."
+    },
+    {
+      id: 133,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is a character of educational objectives?",
+      ar: "أي مما يلي من خصائص الأهداف التعليمية؟",
+      options: [
+        "Relevant",
+        "Irrelevant",
+        "Not observable",
+        "Not measurable"
+      ],
+      correct: 0,
+      explanation: "الأهداف التعليمية الجيدة تكون مرتبطة بالموضوع وواقعية."
+    },
+    {
+      id: 134,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is ideal learning definition?",
+      ar: "أي من التالي التعريف المثالي للتعلّم؟",
+      options: [
+        "The process, the end result of which is relatively permanent changes of learner’s behavior capability",
+        "Interaction between learners and teachers without changes in the learner’s behavior",
+        "Interaction between clients",
+        "Non change process in learner’s behaviors"
+      ],
+      correct: 0,
+      explanation: "التعلم يُقاس بالتغيّر الدائم نسبيًا في سلوك أو قدرات المتعلم."
+    },
+    {
+      id: 135,
+      part: "Group A",
+      category: "Communication",
+      en: "….is considered as a barrier of communication.",
+      ar: "أي مما يلي يُعتبر عائقًا للاتصال؟",
+      options: [
+        "Proper channel",
+        "Inappropriate channel",
+        "Good channel",
+        "Relevant channel"
+      ],
+      correct: 1,
+      explanation: "اختيار قناة غير مناسبة يمنع وصول الرسالة بوضوح."
+    },
+    {
+      id: 136,
+      part: "Group A",
+      category: "Communication",
+      en: "Group approach method of education include which of the following?",
+      ar: "أي مما يلي ضمن أساليب التعليم الجماعي؟",
+      options: [
+        "Television",
+        "Home visit",
+        "Lecture, conferences",
+        "Radio"
+      ],
+      correct: 2,
+      explanation: "المحاضرات والمؤتمرات تُستخدم لتعليم مجموعات من المتعلمين."
+    },
+    {
+      id: 137,
+      part: "Group A",
+      category: "Communication",
+      en: "Group approach of health education include which of the following ?",
+      ar: "أي مما يلي من أساليب التثقيف الصحي الجماعي؟",
+      options: [
+        "Internet",
+        "Workshops, seminars",
+        "Personal contact",
+        "Television"
+      ],
+      correct: 1,
+      explanation: "ورش العمل والندوات أمثلة على جلسات تثقيف صحي لمجموعات."
+    },
+    {
+      id: 138,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for essentials of communication?",
+      ar: "أي مما يلي صحيح من أساسيات الاتصال؟",
+      options: [
+        "Mutter in angers",
+        "Do not go to the conclusion",
+        "Interrupt the speaker",
+        "Use medical terminology difficult to be understand"
+      ],
+      correct: 1,
+      explanation: "عدم القفز للنتائج قبل الاستماع الكامل عنصر مهم في الاتصال الفعّال."
+    },
+    {
+      id: 139,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for barriers of communication?",
+      ar: "أي مما يلي صحيح كعائق للاتصال؟",
+      options: [
+        "Go to conclusion",
+        "Matter in anger",
+        "Interrupt the speaker",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الاستعجال في الحكم، والانفعال، ومقاطعة المتحدث كلها تعطل عملية التواصل."
+    },
+    {
+      id: 140,
+      part: "Group A",
+      category: "Communication",
+      en: "As regard use of medical terminology difficult to be understood considered?",
+      ar: "يُعتبر استخدام مصطلحات طبية صعبة الفهم:",
+      options: [
+        "Essentials of communication",
+        "Barriers of communication",
+        "Relevant to communication",
+        "Irrelevant to communications"
+      ],
+      correct: 1,
+      explanation: "اللغة المعقدة تجعل المريض أو الطالب لا يفهم الرسالة، فتتحول لعائق."
+    },
+    {
+      id: 141,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for barriers of communication?",
+      ar: "أي مما يلي صحيح كعائق للاتصال؟",
+      options: [
+        "Lack of privacy",
+        "Noise",
+        "Uncomfortable setting",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "عدم الخصوصية والضوضاء والجلوس غير المريح تقلل جودة التفاعل."
+    },
+    {
+      id: 142,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for motivation?",
+      ar: "أي مما يلي صحيح عن الدافعية؟",
+      options: [
+        "Develop love to learn",
+        "Can not overcome barriers",
+        "Fear is not a motivator",
+        "1+3"
+      ],
+      correct: 3,
+      explanation: "الدافعية الحقيقية تنمّي حب التعلم ولا تعتمد على الخوف وحده."
+    },
+    {
+      id: 143,
+      part: "Group A",
+      category: "Communication",
+      en: "As regards touch is",
+      ar: "بالنسبة للمس، يُعد:",
+      options: [
+        "Verbal communication",
+        "Barrier of communication",
+        "Essential for verbal communication",
+        "Nonverbal communication"
+      ],
+      correct: 3,
+      explanation: "اللمس جزء من الاتصال غير اللفظي وليس اللفظي."
+    },
+    {
+      id: 144,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is a character nonverbal speech ?",
+      ar: "أي مما يلي من خصائص الرسائل غير اللفظية؟",
+      options: [
+        "Eye to eye contact",
+        "Reliable",
+        "Use with deaf patient",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "الاتصال غير اللفظي يعتمد على نظرات العين ويمكن استخدامه مع ضعاف السمع ويُعتبر غالبًا صادقًا."
+    },
+    {
+      id: 145,
+      part: "Group A",
+      category: "Communication",
+      en: "Which of the following is ideal for deaf and mute communication?",
+      ar: "أي مما يلي مناسب للتواصل مع الصم والبكم؟",
+      options: [
+        "Nonverbal communication",
+        "Verbal communication",
+        "Upward communication",
+        "Downward communication"
+      ],
+      correct: 0,
+      explanation: "يُستخدم معهم الإشارات ولغة الجسد أكثر من الكلام اللفظي."
+    },
+    {
+      id: 146,
+      part: "Group A",
+      category: "Communication",
+      en: "….is considered as a barrier of communication.",
+      ar: "أي مما يلي يُعتبر عائقًا للاتصال؟",
+      options: [
+        "Easy speech",
+        "Inappropriate channel",
+        "Good channel",
+        "Relevant channel"
+      ],
+      correct: 1,
+      explanation: "القناة غير المناسبة تُضعف وصول الرسالة وتفسيرها."
+    },
+    {
+      id: 147,
+      part: "Group A",
+      category: "Communication",
+      en: "Mass approach method of education include which of the following?",
+      ar: "أي مما يلي يدخل في أسلوب التعليم الجماهيري؟",
+      options: [
+        "Television",
+        "Videos",
+        "Radio",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "كل هذه الوسائل تُستخدم للوصول إلى أعداد كبيرة من الجمهور."
+    },
+    {
+      id: 148,
+      part: "Group A",
+      category: "Communication",
+      en: "Good understanding and proper analysis is requirement of",
+      ar: "الفهم الجيد والتحليل السليم مطلوبان في:",
+      options: [
+        "Verbal communication",
+        "Nonverbal communication",
+        "Downward communication",
+        "Upward communication"
+      ],
+      correct: 1,
+      explanation: "تفسير الإشارات غير اللفظية يحتاج فهمًا وتحليلًا دقيقًا للسلوك."
+    },
+    {
+      id: 149,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for emotions?",
+      ar: "أي مما يلي صحيح عن التعبير عن العواطف؟",
+      options: [
+        "Expressed in eye contact",
+        "Express in touch",
+        "Express in body language",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "العواطف تظهر في نظرات العين واللمس ولغة الجسد معًا."
+    },
+    {
+      id: 150,
+      part: "Group A",
+      category: "Communication",
+      en: "Which is correct for barriers of communication?",
+      ar: "أي مما يلي صحيح كعائق للاتصال؟",
+      options: [
+        "Go to conclusion",
+        "Matter in anger",
+        "Interrupt the speaker",
+        "All the above"
+      ],
+      correct: 3,
+      explanation: "كل هذه السلوكيات تُضعف فعالية الاتصال وتمنع الفهم المتبادل."
+    },
+        // ===== True / False converted to MCQ (start again from 1) =====
+    {
+      id: 1,
+      part: "Group T",
+      category: "True/False",
+      en: "Barrier of communication related to the sender is lack of interest.",
+      ar: "عائق الاتصال المتعلق بالمرسل هو عدم الاهتمام.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "عدم اهتمام المرسل بالموضوع يقلل جودة الرسالة ويُعد عائقًا للاتصال."
+    },
+    {
+      id: 2,
+      part: "Group T",
+      category: "True/False",
+      en: "Making inappropriate use of medical terminology is considered as a barrier of communication.",
+      ar: "الاستخدام غير المناسب للمصطلحات الطبية يُعتبر عائقًا للاتصال.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "المصطلحات الصعبة مع غير المتخصصين تجعل الرسالة غير مفهومة."
+    },
+    {
+      id: 3,
+      part: "Group T",
+      category: "True/False",
+      en: "Nonverbal communication uses words.",
+      ar: "الاتصال غير اللفظي يستخدم الكلمات.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "الاتصال غير اللفظي يعتمد على لغة الجسد وتعبيرات الوجه وليس الكلمات."
+    },
+    {
+      id: 4,
+      part: "Group T",
+      category: "True/False",
+      en: "Proper questioning is a barrier of communication.",
+      ar: "طرح الأسئلة المناسبة يُعتبر عائقًا للاتصال.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "الأسئلة الجيدة تسهّل الفهم ولا تُعد عائقًا."
+    },
+    {
+      id: 5,
+      part: "Group T",
+      category: "True/False",
+      en: "Motivation is external force.",
+      ar: "الدافعية قوة خارجية فقط.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "الدافعية أساسًا قوة وعوامل داخلية أكثر من كونها خارجية فقط."
+    },
+    {
+      id: 6,
+      part: "Group T",
+      category: "True/False",
+      en: "Anxiety is barrier of communication.",
+      ar: "القلق يُعد عائقًا للاتصال.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "القلق يشتت الانتباه ويقلل القدرة على التركيز في الرسالة."
+    },
+    {
+      id: 7,
+      part: "Group T",
+      category: "True/False",
+      en: "Improper channel of communication is a barrier of communication channel.",
+      ar: "القناة غير المناسبة للاتصال تُعد عائقًا للاتصال.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "اختيار قناة غير ملائمة يمنع وصول الرسالة بوضوح."
+    },
+    {
+      id: 8,
+      part: "Group T",
+      category: "True/False",
+      en: "Do not react instantly in anger is essential of good communication.",
+      ar: "عدم الرد فورًا في حالة الغضب من أساسيات الاتصال الجيد.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "التحكم في الانفعال يساعد على تواصل هادئ وواضح."
+    },
+    {
+      id: 9,
+      part: "Group T",
+      category: "True/False",
+      en: "Nonverbal communication is more reliable than verbal.",
+      ar: "الاتصال غير اللفظي أكثر موثوقية من الاتصال اللفظي.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "الإشارات غير اللفظية غالبًا تعكس المشاعر الحقيقية."
+    },
+    {
+      id: 10,
+      part: "Group T",
+      category: "True/False",
+      en: "Downward communication is from senior to junior.",
+      ar: "الاتصال الهابط يكون من الأعلى إلى الأسفل.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "في التنظيم الإداري الاتصال الهابط ينتقل من المدير للمرؤوس."
+    },
+        {
+      id: 11,
+      part: "Group T",
+      category: "True/False",
+      en: "Person has good conscious control.",
+      ar: "الشخص يمتلك دائمًا تحكمًا واعيًا جيدًا في سلوكه.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "الإنسان لا يتحكم دائمًا في سلوكه، خاصة في الإشارات غير اللفظية."
+    },
+    {
+      id: 12,
+      part: "Group T",
+      category: "True/False",
+      en: "Nonverbal communication gives direct question.",
+      ar: "الاتصال غير اللفظي يستخدم أسئلة مباشرة.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "الأسئلة المباشرة جزء من الاتصال اللفظي وليس غير اللفظي."
+    },
+    {
+      id: 13,
+      part: "Group T",
+      category: "True/False",
+      en: "Motivation is internal force start with dream.",
+      ar: "الدافعية قوة داخلية تبدأ بالحلم والرؤية.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "الدافعية تنشأ من احتياج ورؤية وحلم داخلي يدفع السلوك."
+    },
+    {
+      id: 14,
+      part: "Group T",
+      category: "True/False",
+      en: "Body language is considered nonverbal communication.",
+      ar: "لغة الجسد تُعتبر من الاتصال غير اللفظي.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "لغة الجسد أهم أشكال الاتصال غير اللفظي."
+    },
+    {
+      id: 15,
+      part: "Group T",
+      category: "True/False",
+      en: "Touch is considered verbal communication.",
+      ar: "اللمس يُعد من الاتصال اللفظي.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "اللمس وسيلة غير لفظية للتعبير عن المشاعر."
+    },
+    {
+      id: 16,
+      part: "Group T",
+      category: "True/False",
+      en: "Touch is nonverbal communication.",
+      ar: "اللمس نوع من الاتصال غير اللفظي.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "اللمس ينقل رسائل بدون كلمات مثل الدعم أو التعاطف."
+    },
+    {
+      id: 17,
+      part: "Group T",
+      category: "True/False",
+      en: "Verbal communication uses words and voice.",
+      ar: "الاتصال اللفظي يستخدم الكلمات والصوت.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "السمة الأساسية للاتصال اللفظي هي استخدام الكلمات منطوقة أو مكتوبة."
+    },
+    {
+      id: 18,
+      part: "Group T",
+      category: "True/False",
+      en: "Barriers of communication is uncomfortable sitting.",
+      ar: "الجلوس غير المريح يُعد من عوائق الاتصال.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "عدم الراحة الجسدية يقلل التركيز والانتباه للرسالة."
+    },
+    {
+      id: 19,
+      part: "Group T",
+      category: "True/False",
+      en: "Good light consider essential for communication.",
+      ar: "الإضاءة الجيدة تُعد ضرورية للاتصال.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "الإضاءة الجيدة تساعد على رؤية المتحدث ولغة جسده بوضوح."
+    },
+    {
+      id: 20,
+      part: "Group T",
+      category: "True/False",
+      en: "Teacher is sender.",
+      ar: "المعلم هو المرسل في الموقف التعليمي.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "المعلم عادة يرسل المعلومات والتعليمات للطلاب."
+    },
+    {
+      id: 21,
+      part: "Group T",
+      category: "True/False",
+      en: "Student is receiver.",
+      ar: "الطالب هو المستقبل في الموقف التعليمي.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "الطالب يستقبل المعلومات من المعلم."
+    },
+    {
+      id: 22,
+      part: "Group T",
+      category: "True/False",
+      en: "Message should be clear and meaningful.",
+      ar: "يجب أن تكون الرسالة واضحة وذات معنى.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "الوضوح والمعنى أساس لأي تواصل فعّال."
+    },
+    {
+      id: 23,
+      part: "Group T",
+      category: "True/False",
+      en: "Unrelevant message is barrier of communication.",
+      ar: "الرسالة غير المرتبطة بالموضوع تُعد عائقًا للاتصال.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "المحتوى غير المرتبط يربك المستقبل ويضيع الوقت."
+    },
+    {
+      id: 24,
+      part: "Group T",
+      category: "True/False",
+      en: "Communication is basic component of human relationship.",
+      ar: "الاتصال هو المكوّن الأساسي للعلاقات الإنسانية.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "بدون تواصل لا يمكن بناء أو استمرار أي علاقة بشرية."
+    },
+    {
+      id: 25,
+      part: "Group T",
+      category: "True/False",
+      en: "Nonverbal communication represnt 90% of communication.",
+      ar: "الاتصال غير اللفظي يمثّل نحو 90٪ من الاتصال.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "يُشار غالبًا إلى أن أغلب الرسائل في التفاعل الإنساني تُنقل بشكل غير لفظي."
+    },
+    {
+      id: 26,
+      part: "Group T",
+      category: "True/False",
+      en: "Nonverbal communication represent 10% of communication.",
+      ar: "الاتصال غير اللفظي يمثل 10٪ فقط من الاتصال.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "النسبة الكبرى من الرسائل ليست لفظية، لذا 10٪ رقم غير دقيق."
+    },
+    {
+      id: 27,
+      part: "Group T",
+      category: "True/False",
+      en: "Nonverbal communication needs good observation and analysis.",
+      ar: "الاتصال غير اللفظي يحتاج لملاحظة وتحليل جيدين.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "فهم لغة الجسد يتطلب الانتباه لتفاصيل السلوك وتحليلها."
+    },
+    {
+      id: 28,
+      part: "Group T",
+      category: "True/False",
+      en: "Good communicator recognize the clients needs.",
+      ar: "المتواصل الجيد يتعرّف على احتياجات العملاء.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "معرفة احتياج الشخص تساعد على توجيه الرسالة بطريقة مناسبة."
+    },
+    {
+      id: 29,
+      part: "Group T",
+      category: "True/False",
+      en: "Important communication brings patient satisfaction.",
+      ar: "الاتصال الجيد يجلب رضا المريض.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "وضوح المعلومات واحترام المريض يرفع مستوى رضاه عن الخدمة."
+    },
+    {
+      id: 30,
+      part: "Group T",
+      category: "True/False",
+      en: "Good communication decreases the medicolegal consequences.",
+      ar: "الاتصال الجيد يقلل العواقب الطبية القانونية.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "التوضيح الجيد يقلل الشكاوى وسوء الفهم الذي يقود لمشكلات قانونية."
+    },
+    {
+      id: 31,
+      part: "Group T",
+      category: "True/False",
+      en: "Good communicator can get adequate electronic and written records.",
+      ar: "المتواصل الجيد يحافظ على سجلات مكتوبة وإلكترونية كافية.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "التوثيق الجيد جزء من ممارسات التواصل المهني."
+    },
+    {
+      id: 32,
+      part: "Group T",
+      category: "True/False",
+      en: "Receiver is the person to home message is directed.",
+      ar: "المستقبل هو الشخص الذي تُوجَّه إليه الرسالة.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "هو الطرف الذي يستقبل الرسالة ويفسرها."
+    },
+    {
+      id: 33,
+      part: "Group T",
+      category: "True/False",
+      en: "Sender is the person initiating the conversation.",
+      ar: "المرسل هو الشخص الذي يبدأ المحادثة.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "هو الذي يرسل الرسالة الأولى في عملية الاتصال."
+    },
+    {
+      id: 34,
+      part: "Group T",
+      category: "True/False",
+      en: "Verbal communication needs active listening.",
+      ar: "الاتصال اللفظي يحتاج إلى استماع نشط.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "الاستماع النشط يساعد على فهم الرسالة والرد المناسب."
+    },
+    {
+      id: 35,
+      part: "Group T",
+      category: "True/False",
+      en: "Take risk and set a major goal is base of motivation.",
+      ar: "أخذ المخاطرة ووضع هدف كبير أساس من أسس الدافعية.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "الأهداف الكبيرة القابلة للتحدي تزيد حماس الفرد."
+    },
+    {
+      id: 36,
+      part: "Group T",
+      category: "True/False",
+      en: "Health education help people to make decision about their health.",
+      ar: "التثقيف الصحي يساعد الناس على اتخاذ قرارات صحية.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "المعلومات الصحية الجيدة تمكّن الشخص من اختيار سلوك صحي."
+    },
+    {
+      id: 37,
+      part: "Group T",
+      category: "True/False",
+      en: "Major goal of health education is to prevent chronic preventable disease.",
+      ar: "الهدف الرئيسي للتثقيف الصحي الوقاية من الأمراض المزمنة القابلة للمنع.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "تغيير السلوك يقلل حدوث أمراض مزمنة يمكن الوقاية منها."
+    },
+    {
+      id: 38,
+      part: "Group T",
+      category: "True/False",
+      en: "As regard rules of motivation, learn how to learn.",
+      ar: "من قواعد الدافعية: تعلّم كيف تتعلم.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "امتلاك مهارات التعلّم الذاتي يزيد الدافعية للاستمرار في التعلم."
+    },
+    {
+      id: 39,
+      part: "Group T",
+      category: "True/False",
+      en: "As regard rules of motivation socialize with other of the same interest.",
+      ar: "من قواعد الدافعية التواصل مع من يشاركونك نفس الاهتمام.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "المحيطين المهتمين بنفس المجال يدعمون الاستمرارية والحماس."
+    },
+    {
+      id: 40,
+      part: "Group T",
+      category: "True/False",
+      en: "Put major goals and take risk to motivate.",
+      ar: "وضع أهداف كبيرة مع بعض المخاطرة يحفّز الفرد.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "الأهداف الكبيرة تشجع على بذل مجهود أكبر."
+    },
+    {
+      id: 41,
+      part: "Group T",
+      category: "True/False",
+      en: "Bad light is bad for educational learning.",
+      ar: "الإضاءة السيئة تؤثر سلبًا على عملية التعلم.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "تُتعب العين وتقلل القدرة على القراءة والتركيز."
+    },
+  
+    {
+      id: 42,
+      part: "Group T",
+      category: "True/False",
+      en: "Take risk to achieve major goals is not a motivator.",
+      ar: "أخذ المخاطرة لتحقيق أهداف كبيرة ليس محفزًا.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "تحقيق الأهداف الكبيرة عادة يكون محفزًا قويًا؛ لذلك الجملة كنص تعتبر غير صحيحة."
+    },
+    {
+      id: 43,
+      part: "Group T",
+      category: "True/False",
+      en: "Educational objectives should not be measurable.",
+      ar: "الأهداف التعليمية لا يجب أن تكون قابلة للقياس.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "من خصائص الهدف التعليمي الجيد أن يكون محددًا وقابلاً للقياس."
+    },
+    {
+      id: 44,
+      part: "Group T",
+      category: "True/False",
+      en: "Sources of motivation are social and behavioral.",
+      ar: "مصادر الدافعية اجتماعية وسلوكية.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "العوامل الاجتماعية والسلوكية من أهم مصادر تحفيز الأفراد."
+    },
+    {
+      id: 45,
+      part: "Group T",
+      category: "True/False",
+      en: "Health educator cannot design health programs.",
+      ar: "المثقف الصحي لا يستطيع تصميم برامج صحية.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "من أدوار المثقف الصحي المساعدة في تصميم وتنفيذ برامج التثقيف الصحي."
+    },
+    {
+      id: 46,
+      part: "Group T",
+      category: "True/False",
+      en: "Health educators improve community health.",
+      ar: "المثقفون الصحيون يحسنون صحة المجتمع.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "عملهم في نشر الوعي وتغيير السلوك ينعكس على صحة المجتمع."
+    },
+    {
+      id: 47,
+      part: "Group T",
+      category: "True/False",
+      en: "Do not go to the conclusion is essential for good communication.",
+      ar: "عدم القفز للنتيجة من أساسيات الاتصال الجيد.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "يجب سماع الرسالة كاملة قبل إصدار حكم أو استنتاج."
+    },
+    {
+      id: 48,
+      part: "Group T",
+      category: "True/False",
+      en: "Do not interrupt the speakers is essential for good communication.",
+      ar: "عدم مقاطعة المتحدثين من أساسيات الاتصال الجيد.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "المقاطعة تعطل تسلسل الرسالة وتُشعر المتحدث بعدم الاحترام."
+    },
+    {
+      id: 49,
+      part: "Group T",
+      category: "True/False",
+      en: "React instantly in anger.",
+      ar: "الاستجابة فورًا في حالة الغضب سلوك مطلوب.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 1,
+      explanation: "الاستجابة الغاضبة السريعة تفسد التواصل وتزيد الصراع."
+    },
+    {
+      id: 50,
+      part: "Group T",
+      category: "True/False",
+      en: "Do not react instantly in anger.",
+      ar: "عدم الاستجابة فورًا في حالة الغضب سلوك مطلوب.",
+      options: ["True", "False", "None 1", "None 2"],
+      correct: 0,
+      explanation: "التحكم في الانفعال يعطي فرصة لفهم الرسالة والتفكير قبل الرد."
+    }
+
+
+    // يمكنك إكمال بقية الأسئلة 7–150 بنفس النمط عندك من النص.
+  ];
+
+  // ============== STATE & HELPERS ==============
+  const state = {
+    answered: {}, // id -> { chosen, isCorrect }
+    filterPart: "ALL",
+    filterCategory: "ALL",
+    search: ""
+  };
+
+  const statsEls = {
+    total: document.getElementById("stat-total"),
+    answered: document.getElementById("stat-answered"),
+    correct: document.getElementById("stat-correct"),
+    percent: document.getElementById("stat-percent")
+  };
+
+  const questionsContainer = document.getElementById("questionsContainer");
+
+  // ============== RENDERING ==============
+  function updateStats() {
+    const total = allQuestions.length;
+    const answeredIds = Object.keys(state.answered);
+    const answeredCount = answeredIds.length;
+    const correctCount = answeredIds.filter(id => state.answered[id].isCorrect).length;
+    const percent = answeredCount === 0 ? 0 : Math.round((correctCount / answeredCount) * 100);
+
+    statsEls.total.textContent = total;
+    statsEls.answered.textContent = answeredCount;
+    statsEls.correct.textContent = correctCount;
+    statsEls.percent.textContent = percent + "%";
+  }
+
+  function filterQuestions() {
+    const search = state.search.trim().toLowerCase();
+    return allQuestions.filter(q => {
+      if (state.filterPart !== "ALL" && q.part !== state.filterPart) return false;
+      if (state.filterCategory !== "ALL" && q.category !== state.filterCategory) return false;
+
+      if (search) {
+        const hay = (
+          q.en + " " +
+          (q.ar || "") + " " +
+          (q.part || "") + " " +
+          (q.category || "")
+        ).toLowerCase();
+        if (!hay.includes(search)) return false;
+      }
+      return true;
+    });
+  }
+
+  function renderQuestions() {
+    questionsContainer.innerHTML = "";
+    const list = filterQuestions();
+    list.forEach(q => {
+      const card = document.createElement("div");
+      card.className = "question-card";
+
+      const header = document.createElement("div");
+      header.className = "q-header";
+
+      const num = document.createElement("div");
+      num.className = "q-number";
+      num.textContent = q.id;
+
+      const meta = document.createElement("div");
+      meta.className = "q-meta";
+      meta.textContent = `${q.part || ""} • ${q.category || ""}`;
+
+      header.appendChild(num);
+      header.appendChild(meta);
+
+      const textEn = document.createElement("div");
+      textEn.className = "q-text-en";
+      textEn.textContent = q.en;
+
+      const textAr = document.createElement("div");
+      textAr.className = "q-text-ar";
+      textAr.textContent = q.ar || "";
+
+      const optionsGrid = document.createElement("div");
+      optionsGrid.className = "options-grid";
+
+      const footer = document.createElement("div");
+      footer.className = "q-footer hidden";
+      footer.innerHTML = `
+        <div><strong>Correct answer:</strong> <span class="correct-text"></span></div>
+        <div><strong>تفسير:</strong> <span class="exp-text"></span></div>
+      `;
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = opt;
+        btn.addEventListener("click", () => {
+          handleAnswer(q, idx, optionsGrid, footer);
+        });
+        optionsGrid.appendChild(btn);
+      });
+
+      card.appendChild(header);
+      card.appendChild(textEn);
+      card.appendChild(textAr);
+      card.appendChild(optionsGrid);
+      card.appendChild(footer);
+
+      questionsContainer.appendChild(card);
+    });
+
+    updateStats();
+  }
+
+  function handleAnswer(question, chosenIndex, optionsGrid, footer) {
+    const buttons = optionsGrid.querySelectorAll(".option-btn");
+    buttons.forEach((btn, idx) => {
+      btn.classList.remove("correct", "incorrect");
+      if (idx === question.correct) {
+        btn.classList.add("correct");
+      } else if (idx === chosenIndex) {
+        btn.classList.add("incorrect");
+      }
+    });
+
+    const isCorrect = chosenIndex === question.correct;
+    state.answered[question.id] = { chosen: chosenIndex, isCorrect };
+
+    footer.classList.remove("hidden");
+    footer.querySelector(".correct-text").textContent = question.options[question.correct];
+    footer.querySelector(".exp-text").textContent = question.explanation || "";
+
+    updateStats();
+  }
+
+  // ============== FILTERS & SEARCH ==============
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+    state.search = e.target.value;
+    renderQuestions();
+  });
+
+  document.getElementById("partFilters").addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn")) {
+      const value = e.target.getAttribute("data-part");
+      state.filterPart = value;
+
+      document.querySelectorAll("#partFilters .btn").forEach(btn => btn.classList.remove("active"));
+      e.target.classList.add("active");
+      renderQuestions();
+    }
+  });
+
+  document.getElementById("categoryFilters").addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn")) {
+      const value = e.target.getAttribute("data-category");
+      state.filterCategory = value;
+
+      document.querySelectorAll("#categoryFilters .btn").forEach(btn => btn.classList.remove("active"));
+      e.target.classList.add("active");
+      renderQuestions();
+    }
+  });
+
+  // ============== INIT ==============
+  renderQuestions();
+</script>
+</body>
+</html>
